@@ -22,20 +22,20 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
-					
+
 					<div id="navbar" class="collapse navbar-collapse">
 
 						<ul class="nav navbar-nav">
 							<li sec:authorize="isAuthenticated()" style="margin-right: 10px;"><a
 								th:href="@{/logout}">Logout</a></li>
-							<li sec:authorize="isAuthenticated()"><a 
+							<li sec:authorize="isAuthenticated()"><a
 								th:href="@{/profile}" sec:authentication="principal.username"></a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 	</nav>
 
 	<!--form  -->
@@ -43,35 +43,34 @@
 
 	<div class="container">
 		<div class="row">
-		
-		<!-- success message -->
-		<div th:if="${param.success}">
-			<div class="alert alert-info">You've successfully registered to
-				an user!</div>
-		</div>
-		
+
+			<!-- success message -->
+			<div th:if="${param.success}">
+				<div class="alert alert-info">You've successfully registered
+					to an user!</div>
+			</div>
+
 
 			<div
 				class="col-lg-6  col-md-6 col-sm-6 container justify-content-center card">
 
-				<h1 class="text-center" style="margin-top: 20px">Update 
-					User</h1>
+				<h1 class="text-center" style="margin-top: 20px">Update User</h1>
 
 				<div class="card-body">
 
 					<form th:action="@{/updateuser}" th:object="${user}" method="post">
 
- 
-                           <div class="form-group">
+
+						<div class="form-group">
 
 
-							<label>User id</label> <input type="number"
-								name="firstname" th:field="*{id}"
-								placeholder="enter your first name" class="form-control" readonly="readonly">
+							<label>User id</label> <input type="number" name="firstname"
+								th:field="*{id}" placeholder="enter your first name"
+								class="form-control" readonly="readonly">
 
 						</div>
-                            
-                            
+
+
 						<div class="form-group">
 
 
@@ -101,31 +100,34 @@
 
 						</div>
 
-						<div class="form-group">
+						<!-- 	<div class="form-group">
 
 
 							<label>User Password</label> <input type="text" name="email"
 								th:field="*{password}" placeholder="enter your email"
 								class="form-control">
 
-						</div>
+						</div> -->
 
 
 						<div class="form-group">
 
 
-							<label>User Role</label><select name="ROLES" id="ROLES" >
-								<option  value="2">DEVLOPER</option> 
+							<label>User Role</label><select name="ROLES" id="ROLES" th:each=user:${user}>
+								<option  th:value="*{role.id}"  th:text="*{role.Role}"></option>
+								<option value="2">DEVLOPER</option>
 								<option value="3">TESTER</option>
-                                <option value="1">ADMIN</option>
-                                
+								<option value="1">ADMIN</option>
+
 							</select>
 						</div>
+						
+
 
 
 
 						<div class="box-footer">
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="submit" class="btn btn-primary" onclick="return confirm('Pakka na ? 😓😓😕')">Submit</button>
 						</div>
 
 

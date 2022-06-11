@@ -1,4 +1,4 @@
-package com.BugTracker.Entity;
+package com.BugTracker.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Team {
 	private Long id;
 	private String teamname;
 
-	@ManyToMany
+	@ManyToMany()
 	private List<User> users = new ArrayList<User>();
 
 	@ManyToMany(mappedBy = "teams", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

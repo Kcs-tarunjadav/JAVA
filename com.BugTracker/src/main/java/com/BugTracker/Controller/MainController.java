@@ -1,6 +1,8 @@
-package com.BugTracker.Controller;
+package com.BugTracker.controller;
 
 import java.security.Principal;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -13,10 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.BugTracker.Entity.User;
-import com.BugTracker.Entity.UserRole;
-
-import com.BugTracker.Service.UserService;
+import com.BugTracker.entity.User;
+import com.BugTracker.entity.UserRole;
+import com.BugTracker.service.UserService;
 
 
 /**
@@ -82,11 +83,12 @@ public class MainController {
 	@PostMapping("/register")
 	@Secured("ROLE_ADMIN")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public String adding(User user, @RequestParam("ROLES") Long role, UserRole userRole) {
+	public String adding(User user, @RequestParam("ROLES") Long role, UserRole userRole) throws MessagingException {
 
 		userRole.setId(role);
-
 		user.setRole(userRole);
+		
+		userService.emailUser(user);
 		userService.saveUser(user);
 
 		return "redirect:/?success";
@@ -139,14 +141,13 @@ public class MainController {
 		existingUser.setId(existingUser.getId());
 		existingUser.setFirstname(user.getFirstname());
 		existingUser.setLastname(user.getLastname());
-
 		userRole.setId(role);
 		user.setRole(userRole);
-
 		existingUser.setUsername(user.getUsername());
-
 		existingUser.setRole(user.getRole());
-		existingUser.setPassword(user.getPassword());
+		existingUser.setPassword(existingUser.getPassword());
+		
+		System.out.println(existingUser.getPassword());
 
 		userService.saveUser(existingUser);
 

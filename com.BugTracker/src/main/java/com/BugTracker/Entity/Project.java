@@ -1,4 +1,4 @@
-package com.BugTracker.Entity;
+package com.BugTracker.entity;
 
 import java.util.ArrayList;
 import java.util.List;

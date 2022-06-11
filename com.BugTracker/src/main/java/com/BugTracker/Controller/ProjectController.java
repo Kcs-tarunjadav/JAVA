@@ -1,4 +1,4 @@
-package com.BugTracker.Controller;
+package com.BugTracker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.BugTracker.Entity.Project;
-import com.BugTracker.Service.ProjectService;
+import com.BugTracker.entity.Project;
+import com.BugTracker.service.ProjectService;
 
 @Controller
 public class ProjectController {

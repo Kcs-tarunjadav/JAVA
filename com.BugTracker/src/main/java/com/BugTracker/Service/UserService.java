@@ -1,12 +1,13 @@
-package com.BugTracker.Service;
-
+package com.BugTracker.service;
 
 import java.util.List;
-
+import javax.mail.MessagingException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.BugTracker.Entity.User;
-import com.BugTracker.Entity.UserRole;
+import com.BugTracker.entity.Team;
+import com.BugTracker.entity.User;
+import com.BugTracker.entity.UserRole;
+
 
 public interface UserService  extends UserDetailsService{
 
@@ -24,6 +25,15 @@ public interface UserService  extends UserDetailsService{
 	List<User> findByFirstname(String firstname);
 	
 	List<User> 	findAllByRole(UserRole role);
+	
+	void emailUser(User user) throws MessagingException;
+	
+	List<User> findAllByTeams(Team teams);
+	
+	
+
+	
+	
 
 	
 	

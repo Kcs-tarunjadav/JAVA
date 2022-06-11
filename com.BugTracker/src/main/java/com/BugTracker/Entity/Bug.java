@@ -1,4 +1,4 @@
-package com.BugTracker.Entity;
+package com.BugTracker.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.BugTracker.Repository;
+package com.BugTracker.repository;
 
 
 
@@ -7,8 +7,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.BugTracker.Entity.User;
-import com.BugTracker.Entity.UserRole;
+import com.BugTracker.entity.Team;
+import com.BugTracker.entity.User;
+import com.BugTracker.entity.UserRole;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -20,6 +21,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<User> findByLastname(String lastname);
 	
 	List<User> 	findAllByRole(UserRole role);
+	
+	List<User> findAllByTeams(Team teams);
+	
+	
 
+	
+	
 }
         

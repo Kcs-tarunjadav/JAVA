@@ -1,8 +1,8 @@
-package com.BugTracker.Service;
+package com.BugTracker.service;
 
 import java.util.List;
 
-import com.BugTracker.Entity.Project;
+import com.BugTracker.entity.Project;
 
 public interface ProjectService {
 

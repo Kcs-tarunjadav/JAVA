@@ -1,19 +1,22 @@
-package com.BugTracker.Service.Impl;
-
+package com.BugTracker.service.impl;
 
 import java.util.List;
-
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.BugTracker.Entity.User;
-import com.BugTracker.Entity.UserRole;
-import com.BugTracker.Principle.UserPrinciple;
-import com.BugTracker.Repository.UserRepository;
-import com.BugTracker.Service.UserService;
+import com.BugTracker.entity.Team;
+import com.BugTracker.entity.User;
+import com.BugTracker.entity.UserRole;
+import com.BugTracker.principle.UserPrinciple;
+import com.BugTracker.repository.UserRepository;
+import com.BugTracker.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,14 +25,12 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-	
-	
+	private JavaMailSender javaMailSender;
 
-	public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+	public UserServiceImpl(UserRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
+
 	}
 
 	@Override
@@ -47,8 +48,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
-
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		return userRepository.save(user);
 	}
@@ -85,9 +84,43 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> findAllByRole(UserRole role) {
-		
+
 		return userRepository.findAllByRole(role);
 	}
 
+	@Override
+	public void emailUser(User user) throws MessagingException {
+
+		MimeMessage msg = javaMailSender.createMimeMessage();
+
+		try {
+
+			MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+			helper.setTo(user.getUsername());
+
+			helper.setSubject("Testing from Spring Boot");
+
+			helper.setText("<h1>Check attachment for image!</h1>" + "<h3> your username is :" + user.getUsername()
+					+ "<br>and your password is: " + user.getPassword() + "</h3>", true);
+
+			helper.addAttachment("my_photo.png", new ClassPathResource("android.png"));
+
+			javaMailSender.send(msg);
+			System.out.println(" email done");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+	}
+
+	@Override
+	public List<User> findAllByTeams(Team teams) {
+
+		return userRepository.findAllByTeams(teams);
+	}
+
+	
 
 }

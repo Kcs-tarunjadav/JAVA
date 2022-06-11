@@ -1,4 +1,4 @@
-package com.BugTracker.Principle;
+package com.BugTracker.principle;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,8 +11,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.BugTracker.Entity.User;
-import com.BugTracker.Entity.UserRole;
+import com.BugTracker.entity.User;
+import com.BugTracker.entity.UserRole;
 
 public class UserPrinciple implements UserDetails {
 

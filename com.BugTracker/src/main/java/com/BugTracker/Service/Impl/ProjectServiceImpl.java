@@ -1,12 +1,12 @@
-package com.BugTracker.Service.Impl;
+package com.BugTracker.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.BugTracker.Entity.Project;
-import com.BugTracker.Repository.ProjectRepository;
-import com.BugTracker.Service.ProjectService;
+import com.BugTracker.entity.Project;
+import com.BugTracker.repository.ProjectRepository;
+import com.BugTracker.service.ProjectService;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {

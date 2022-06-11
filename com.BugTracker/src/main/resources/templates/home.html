@@ -51,6 +51,12 @@
 			<div class="alert alert-info">You've successfully updated 
 				an user!</div>
 		</div>
+		
+			<!-- success message -->
+		<div th:if="${param.team}">
+			<div class="alert alert-info">You've successfully added
+				an Team!</div>
+		</div>
 
 	<a class="btn btn-outline-primary" style="margin-right: 10px; "
 		type="submit" th:href="register">Add User</a>
@@ -58,6 +64,10 @@
 		type="submit" th:href="showuser"> View Users</a>
 	<a class="btn btn-outline-primary" style="margin-right: 10px;"
 		type="submit" th:href="addproject"> Add Project</a>
+	<a class="btn btn-outline-danger" style="margin-right: 10px;"
+		type="submit" th:href="addteam"> Add Team</a>
+	<a class="btn btn-outline-primary" style="margin-right: 10px;"
+		type="submit" th:href="showteam">Show Team</a>	
 
 
 
