@@ -16,7 +16,7 @@ public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String project_name;
+	private String projectname;
 	private String techonology;
 	private String status;
 	private boolean isdeleted;
@@ -32,12 +32,12 @@ public class Project {
 		this.id = id;
 	}
 
-	public String getProject_name() {
-		return project_name;
+	public String getProjectname() {
+		return projectname;
 	}
 
-	public void setProject_name(String project_name) {
-		this.project_name = project_name;
+	public void setProjectname(String projectname) {
+		this.projectname = projectname;
 	}
 
 	public String getTechonology() {
@@ -76,7 +76,7 @@ public class Project {
 			List<Team> teams) {
 		super();
 		this.id = id;
-		this.project_name = project_name;
+		this.projectname = project_name;
 		this.techonology = techonology;
 		this.status = status;
 		this.isdeleted = isdeleted;

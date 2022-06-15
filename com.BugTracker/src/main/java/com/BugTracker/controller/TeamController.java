@@ -1,5 +1,6 @@
 package com.BugTracker.controller;
 
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -65,20 +66,33 @@ public class TeamController {
 
 		List<User> users = userService.getAllUsers();
 		List<User> teamUser = userService.findAllByTeams(team);
-		for (int i = 0; i < users.size(); i++) {
-
-			for (int j = 0; j < teamUser.size(); j++) {
-				User user = users.get(i);
-				User user2 = teamUser.get(j);
-
-				if (user == user2) {
-
-					System.out.println(user);
-					users.remove(user);
-
-				}
-			}
+		
+		System.out.println(users.size());
+		
+		System.out.println(teamUser.size());
+		
+	
+		for (int i = 0; i <teamUser.size(); i++) {
+			User teamuser2=teamUser.get(i);
+			users.remove(teamuser2);
+			
+			
 		}
+		
+		/*
+		 * System.out.println(users.size());
+		 * 
+		 * System.out.println(teamUser.size()); for (int i = 1; i <users.size(); i++) {
+		 * 
+		 * for (int j = 1; j <teamUser.size(); j++) { User user = users.get(i); User
+		 * user2 = teamUser.get(j);
+		 * 
+		 * if (user.getId() == user2.getId()) {
+		 * 
+		 * System.out.println(user); users.remove(user);
+		 * 
+		 * } } }
+		 */
 
 		model.addAttribute("team", teamService.getTeamById(id));
 		model.addAttribute("user", users);
@@ -141,6 +155,8 @@ public class TeamController {
 
 	public String viewTeamMembers(@PathVariable Long id, Team team, Model model) {
 
+		
+		System.out.println(id);
 		team = teamService.getTeamById(id);
 
 		model.addAttribute("team", teamService.getTeamById(id));

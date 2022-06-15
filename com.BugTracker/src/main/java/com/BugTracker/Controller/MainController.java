@@ -2,8 +2,9 @@ package com.BugTracker.controller;
 
 import java.security.Principal;
 
-import javax.mail.MessagingException;
+import java.util.List;
 
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,16 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import com.BugTracker.entity.Team;
 import com.BugTracker.entity.User;
 import com.BugTracker.entity.UserRole;
+import com.BugTracker.service.TeamService;
 import com.BugTracker.service.UserService;
-
 
 /**
  * 
- * @author Tarun.Jadav
- *Main Controller
+ * @author Tarun.Jadav Main Controller
  */
 
 @Controller
@@ -32,6 +32,9 @@ public class MainController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TeamService teamService;
 
 	@GetMapping("/")
 	public String homeShow(Principal principal, User user, Model model) {
@@ -87,7 +90,7 @@ public class MainController {
 
 		userRole.setId(role);
 		user.setRole(userRole);
-		
+
 		userService.emailUser(user);
 		userService.saveUser(user);
 
@@ -110,7 +113,21 @@ public class MainController {
 
 	public String deleteUser(@PathVariable Long id) {
 
-		userService.deleteUserById(id);
+		
+		User user=userService.getUserById(id);
+		List<Team>teams=teamService.findAllByUsers(user);
+		for (int i = 0; i < teams.size(); i++) {
+			Team team=teams.get(i);
+			team.getUsers().remove(user);
+			user.getTeams().remove(team);
+
+
+			teamService.saveTeam(team);
+			userService.saveUser(user);
+			
+		}
+	
+		userService.deleteUserById(user.getId());
 
 		return "redirect:/showuser";
 
@@ -146,7 +163,7 @@ public class MainController {
 		existingUser.setUsername(user.getUsername());
 		existingUser.setRole(user.getRole());
 		existingUser.setPassword(existingUser.getPassword());
-		
+
 		System.out.println(existingUser.getPassword());
 
 		userService.saveUser(existingUser);
@@ -154,6 +171,8 @@ public class MainController {
 		return "redirect:/?successupdate";
 	}
 
+	
+	//user profile
 	@GetMapping("profile")
 	public String userProfile(Principal principal, Model model) {
 
@@ -169,6 +188,25 @@ public class MainController {
 		model.addAttribute("user", userService.findAllByRole(userRole));
 
 		return "viewusers";
+	}
+
+	
+	//user view team starts here
+	@GetMapping("/showdusersteam")
+	public String showTeams(Principal principal, User user, Model model) {
+
+		user = userService.findByUsername(principal.getName());
+		System.out.println(user.getId());
+		model.addAttribute("team", teamService.findAllByUsers(user));
+
+		return "viewteams_devloper";
+	}
+
+	@GetMapping("team/viewteams/{id}")
+	public String userViewTeamUser(@PathVariable Long id, Team team, Model model) {
+		model.addAttribute("team", teamService.getTeamById(id));
+		model.addAttribute("user", userService.findAllByTeams(team));
+		return "devloper_view_teamuser.html";
 	}
 
 }

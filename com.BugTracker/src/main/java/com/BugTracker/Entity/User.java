@@ -24,10 +24,11 @@ public class User {
 	@Column(unique = true)
 	private String username;
 	private String password;
-	@OneToOne(fetch = FetchType.EAGER)  //,orphanRemoval=true TO MAKE CHANGES IN CHILD DATA 
+	@OneToOne(fetch = FetchType.EAGER) // ,orphanRemoval=true TO MAKE CHANGES IN CHILD DATA
 	private UserRole role;
 
-	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+			
 	private List<Team> teams = new ArrayList<>();
 
 	public Long getId() {
@@ -107,7 +108,5 @@ public class User {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
 				+ ", password=" + password + ", role=" + role + ", teams=" + teams + "]";
 	}
-	
-	
 
 }
